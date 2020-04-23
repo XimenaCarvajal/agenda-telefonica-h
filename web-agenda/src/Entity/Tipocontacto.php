@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,8 @@ class Tipocontacto
      * @ORM\Column(type="string", columnDefinition="ENUM('Activo', 'Inactivo')")
      */
     private $statusTipocontacto;
+
+
 
     public function getIdTipocontacto(): ?int
     {
@@ -54,4 +58,5 @@ class Tipocontacto
 
         return $this;
     }
+
 }
