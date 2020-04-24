@@ -16,7 +16,7 @@ class Tipocontacto
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idTipocontacto;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,11 +28,19 @@ class Tipocontacto
      */
     private $statusTipocontacto;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contacto", mappedBy="fktipocontactoC")
+     */
+    private $contactoTp;
 
-
-    public function getIdTipocontacto(): ?int
+    public function __construct()
     {
-        return $this->idTipocontacto;
+        $this->contactoTp = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNombreTipocontacto(): ?string
@@ -59,4 +67,34 @@ class Tipocontacto
         return $this;
     }
 
+    /**
+     * @return Collection|Contacto[]
+     */
+    public function getContactoTp(): Collection
+    {
+        return $this->contactoTp;
+    }
+
+    public function addContactoTp(Contacto $contactoTp): self
+    {
+        if (!$this->contactoTp->contains($contactoTp)) {
+            $this->contactoTp[] = $contactoTp;
+            $contactoTp->setFktipocontactoC($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactoTp(Contacto $contactoTp): self
+    {
+        if ($this->contactoTp->contains($contactoTp)) {
+            $this->contactoTp->removeElement($contactoTp);
+            // set the owning side to null (unless already changed)
+            if ($contactoTp->getFktipocontactoC() === $this) {
+                $contactoTp->setFktipocontactoC(null);
+            }
+        }
+
+        return $this;
+    }
 }

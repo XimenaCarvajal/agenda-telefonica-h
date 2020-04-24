@@ -16,7 +16,7 @@ class Usuarios
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idUsuario;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -26,25 +26,37 @@ class Usuarios
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $passwordUsuario;
+    private $passUsuario;
 
-   
-     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('Administrador', 'Trabajador')")
+    /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('Admin', 'Trabajador')")
      */
     private $tipoUsuario;
-
-   
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('Activo', 'Inactivo')")
      */
     private $statusUsuario;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Contacto", mappedBy="fkusuarioC")
+     */
+    private $contactoU;
 
-    public function getIdUsuario(): ?int
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Usuariocontacto", mappedBy="fkusuarioUc")
+     */
+    private $usuariocontactoU;
+
+    public function __construct()
     {
-        return $this->idUsuario;
+        $this->contactoU = new ArrayCollection();
+        $this->usuariocontactoU = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getCorreoUsuario(): ?string
@@ -59,14 +71,14 @@ class Usuarios
         return $this;
     }
 
-    public function getPasswordUsuario(): ?string
+    public function getPassUsuario(): ?string
     {
-        return $this->passwordUsuario;
+        return $this->passUsuario;
     }
 
-    public function setPasswordUsuario(string $passwordUsuario): self
+    public function setPassUsuario(string $passUsuario): self
     {
-        $this->passwordUsuario = $passwordUsuario;
+        $this->passUsuario = $passUsuario;
 
         return $this;
     }
@@ -95,5 +107,62 @@ class Usuarios
         return $this;
     }
 
-   
+    /**
+     * @return Collection|Contacto[]
+     */
+    public function getContactoU(): Collection
+    {
+        return $this->contactoU;
+    }
+
+    public function addContactoU(Contacto $contactoU): self
+    {
+        if (!$this->contactoU->contains($contactoU)) {
+            $this->contactoU[] = $contactoU;
+            $contactoU->setFkusuarioC($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactoU(Contacto $contactoU): self
+    {
+        if ($this->contactoU->contains($contactoU)) {
+            $this->contactoU->removeElement($contactoU);
+            // set the owning side to null (unless already changed)
+            if ($contactoU->getFkusuarioC() === $this) {
+                $contactoU->setFkusuarioC(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Usuariocontacto[]
+     */
+    public function getUsuariocontactoU(): Collection
+    {
+        return $this->usuariocontactoU;
+    }
+
+    public function addUsuariocontactoU(Usuariocontacto $usuariocontactoU): self
+    {
+        if (!$this->usuariocontactoU->contains($usuariocontactoU)) {
+            $this->usuariocontactoU[] = $usuariocontactoU;
+            $usuariocontactoU->addFkusuarioUc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuariocontactoU(Usuariocontacto $usuariocontactoU): self
+    {
+        if ($this->usuariocontactoU->contains($usuariocontactoU)) {
+            $this->usuariocontactoU->removeElement($usuariocontactoU);
+            $usuariocontactoU->removeFkusuarioUc($this);
+        }
+
+        return $this;
+    }
 }
