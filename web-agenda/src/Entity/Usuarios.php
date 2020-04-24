@@ -44,7 +44,7 @@ class Usuarios
     private $contactoU;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Usuariocontacto", mappedBy="fkusuarioUc")
+     * @ORM\OneToMany(targetEntity="App\Entity\Usuariocontacto", mappedBy="fkusuarioUc")
      */
     private $usuariocontactoU;
 
@@ -150,7 +150,7 @@ class Usuarios
     {
         if (!$this->usuariocontactoU->contains($usuariocontactoU)) {
             $this->usuariocontactoU[] = $usuariocontactoU;
-            $usuariocontactoU->addFkusuarioUc($this);
+            $usuariocontactoU->setFkusuarioUc($this);
         }
 
         return $this;
@@ -160,7 +160,10 @@ class Usuarios
     {
         if ($this->usuariocontactoU->contains($usuariocontactoU)) {
             $this->usuariocontactoU->removeElement($usuariocontactoU);
-            $usuariocontactoU->removeFkusuarioUc($this);
+            // set the owning side to null (unless already changed)
+            if ($usuariocontactoU->getFkusuarioUc() === $this) {
+                $usuariocontactoU->setFkusuarioUc(null);
+            }
         }
 
         return $this;

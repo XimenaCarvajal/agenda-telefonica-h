@@ -39,17 +39,17 @@ class Contacto
     private $notaContacto;
 
     /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private $statusContacto;
-
-    /**
      * @ORM\Column(type="string", length=15)
      */
     private $usoContacto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tipocontacto", inversedBy="contactoTp")
+     * @ORM\Column(type="string", length=10)
+     */
+    private $statusContacto;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tipocontacto", inversedBy="contactoTc")
      * @ORM\JoinColumn(nullable=false)
      */
     private $fktipocontactoC;
@@ -61,7 +61,7 @@ class Contacto
     private $fkusuarioC;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Usuariocontacto", mappedBy="fkcontactoUc")
+     * @ORM\OneToMany(targetEntity="App\Entity\Usuariocontacto", mappedBy="fkcontactoUc")
      */
     private $usuariocontactoC;
 
@@ -129,18 +129,6 @@ class Contacto
         return $this;
     }
 
-    public function getStatusContacto(): ?string
-    {
-        return $this->statusContacto;
-    }
-
-    public function setStatusContacto(string $statusContacto): self
-    {
-        $this->statusContacto = $statusContacto;
-
-        return $this;
-    }
-
     public function getUsoContacto(): ?string
     {
         return $this->usoContacto;
@@ -149,6 +137,18 @@ class Contacto
     public function setUsoContacto(string $usoContacto): self
     {
         $this->usoContacto = $usoContacto;
+
+        return $this;
+    }
+
+    public function getStatusContacto(): ?string
+    {
+        return $this->statusContacto;
+    }
+
+    public function setStatusContacto(string $statusContacto): self
+    {
+        $this->statusContacto = $statusContacto;
 
         return $this;
     }
@@ -189,7 +189,7 @@ class Contacto
     {
         if (!$this->usuariocontactoC->contains($usuariocontactoC)) {
             $this->usuariocontactoC[] = $usuariocontactoC;
-            $usuariocontactoC->addFkcontactoUc($this);
+            $usuariocontactoC->setFkcontactoUc($this);
         }
 
         return $this;
@@ -199,7 +199,10 @@ class Contacto
     {
         if ($this->usuariocontactoC->contains($usuariocontactoC)) {
             $this->usuariocontactoC->removeElement($usuariocontactoC);
-            $usuariocontactoC->removeFkcontactoUc($this);
+            // set the owning side to null (unless already changed)
+            if ($usuariocontactoC->getFkcontactoUc() === $this) {
+                $usuariocontactoC->setFkcontactoUc(null);
+            }
         }
 
         return $this;

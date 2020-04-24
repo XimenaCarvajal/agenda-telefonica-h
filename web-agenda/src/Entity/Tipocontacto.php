@@ -31,11 +31,11 @@ class Tipocontacto
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Contacto", mappedBy="fktipocontactoC")
      */
-    private $contactoTp;
+    private $contactoTc;
 
     public function __construct()
     {
-        $this->contactoTp = new ArrayCollection();
+        $this->contactoTc = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,28 +70,28 @@ class Tipocontacto
     /**
      * @return Collection|Contacto[]
      */
-    public function getContactoTp(): Collection
+    public function getContactoTc(): Collection
     {
-        return $this->contactoTp;
+        return $this->contactoTc;
     }
 
-    public function addContactoTp(Contacto $contactoTp): self
+    public function addContactoTc(Contacto $contactoTc): self
     {
-        if (!$this->contactoTp->contains($contactoTp)) {
-            $this->contactoTp[] = $contactoTp;
-            $contactoTp->setFktipocontactoC($this);
+        if (!$this->contactoTc->contains($contactoTc)) {
+            $this->contactoTc[] = $contactoTc;
+            $contactoTc->setFktipocontactoC($this);
         }
 
         return $this;
     }
 
-    public function removeContactoTp(Contacto $contactoTp): self
+    public function removeContactoTc(Contacto $contactoTc): self
     {
-        if ($this->contactoTp->contains($contactoTp)) {
-            $this->contactoTp->removeElement($contactoTp);
+        if ($this->contactoTc->contains($contactoTc)) {
+            $this->contactoTc->removeElement($contactoTc);
             // set the owning side to null (unless already changed)
-            if ($contactoTp->getFktipocontactoC() === $this) {
-                $contactoTp->setFktipocontactoC(null);
+            if ($contactoTc->getFktipocontactoC() === $this) {
+                $contactoTc->setFktipocontactoC(null);
             }
         }
 

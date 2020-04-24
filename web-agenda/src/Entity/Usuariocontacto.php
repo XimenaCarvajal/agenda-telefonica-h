@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,20 +22,16 @@ class Usuariocontacto
     private $statusUc;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Usuarios", inversedBy="usuariocontactoU")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuarios", inversedBy="usuariocontactoU")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $fkusuarioUc;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Contacto", inversedBy="usuariocontactoC")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Contacto", inversedBy="usuariocontactoC")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $fkcontactoUc;
-
-    public function __construct()
-    {
-        $this->fkusuarioUc = new ArrayCollection();
-        $this->fkcontactoUc = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -56,54 +50,26 @@ class Usuariocontacto
         return $this;
     }
 
-    /**
-     * @return Collection|Usuarios[]
-     */
-    public function getFkusuarioUc(): Collection
+    public function getFkusuarioUc(): ?Usuarios
     {
         return $this->fkusuarioUc;
     }
 
-    public function addFkusuarioUc(Usuarios $fkusuarioUc): self
+    public function setFkusuarioUc(?Usuarios $fkusuarioUc): self
     {
-        if (!$this->fkusuarioUc->contains($fkusuarioUc)) {
-            $this->fkusuarioUc[] = $fkusuarioUc;
-        }
+        $this->fkusuarioUc = $fkusuarioUc;
 
         return $this;
     }
 
-    public function removeFkusuarioUc(Usuarios $fkusuarioUc): self
-    {
-        if ($this->fkusuarioUc->contains($fkusuarioUc)) {
-            $this->fkusuarioUc->removeElement($fkusuarioUc);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Contacto[]
-     */
-    public function getFkcontactoUc(): Collection
+    public function getFkcontactoUc(): ?Contacto
     {
         return $this->fkcontactoUc;
     }
 
-    public function addFkcontactoUc(Contacto $fkcontactoUc): self
+    public function setFkcontactoUc(?Contacto $fkcontactoUc): self
     {
-        if (!$this->fkcontactoUc->contains($fkcontactoUc)) {
-            $this->fkcontactoUc[] = $fkcontactoUc;
-        }
-
-        return $this;
-    }
-
-    public function removeFkcontactoUc(Contacto $fkcontactoUc): self
-    {
-        if ($this->fkcontactoUc->contains($fkcontactoUc)) {
-            $this->fkcontactoUc->removeElement($fkcontactoUc);
-        }
+        $this->fkcontactoUc = $fkcontactoUc;
 
         return $this;
     }
