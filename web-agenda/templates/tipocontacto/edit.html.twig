@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tipocontacto{% endblock %}
+
+{% block body %}
+
+    {#Navbar#}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">HARMAN</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contactos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Tipo contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    {#Contenido#}
+    <br>
+    <h4><a href="{{ path('tipocontacto_index') }}">Tipo contacto</a> > Edit</h4><!-- Titulo -->
+
+    <div class="page-content container">
+        <div class="panel-heading" style="background:#046F75;"> <!-- Encabezado de la pagina -->
+            <h3 class="panel-title" style="color:white;">Edit Tipo contacto</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><!-- INICIO FORMULARIO -->
+                <div class="panel">
+                    <div class="panel-body container-fluid"><!-- CONTENIDO DEL FORMULARIO -->
+
+                        {{ include('tipocontacto/_form.html.twig', {'button_label': 'Update'}) }}
+                        
+                        {{ include('tipocontacto/_delete_form.html.twig') }}
+                        
+                    </div><!-- CONTENIDO DEL FORMULARIO -->
+                </div>
+            </div><!-- FIN FORMULARIO -->
+        </div>
+    </div>
+   
+{% endblock %}
