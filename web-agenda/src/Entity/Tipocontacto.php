@@ -97,4 +97,8 @@ class Tipocontacto
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->nombreTipocontacto;
+    }
 }

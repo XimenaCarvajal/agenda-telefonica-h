@@ -168,4 +168,9 @@ class Usuarios
 
         return $this;
     }
+
+    //El toString es necesario para que a la hora de llamar los datos a CONTACTOS, este nos devuelva el dato que solicitamos de la manera correcta, es decir tenemos el id, pero, necesitamos obtener los datos concretos de ese id de lo contrario nos mandará un error que el int, no puede ser convertido a string (a ver si se entiende xd)
+    public function __toString(){
+        return $this->correoUsuario;
+    }
 }
